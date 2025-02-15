@@ -38,6 +38,7 @@ import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.ui.UI;
 import com.almasb.fxgl.intelligence.gesturerecog.HandTrackingService;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -155,11 +156,10 @@ public class PongApp extends GameApplication {
         controller.getLabelScorePlayer().textProperty().bind(getip("player1score").asString());
         controller.getLabelScoreEnemy().textProperty().bind(getip("player2score").asString());
 
-        HandTrackingUIController handController = new HandTrackingUIController();
-        UI handUI = getAssetLoader().loadUI("hand.fxml", handController);
-
         getGameScene().addUI(ui);
-        getGameScene().addUI(handUI);
+
+        Canvas canvas = new Canvas(800,600);
+        getGameScene().addChild(canvas);
     }
 
     private void initScreenBounds() {
