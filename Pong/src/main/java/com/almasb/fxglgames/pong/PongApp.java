@@ -30,6 +30,7 @@ import com.almasb.fxgl.animation.Interpolators;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.core.math.FXGLMath;
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
@@ -59,6 +60,7 @@ public class PongApp extends GameApplication {
     protected void initSettings(GameSettings settings) {
         settings.setTitle("Pong");
         settings.setVersion("1.0");
+        settings.addEngineService(HandTrackingService.class);
     }
 
     private BatComponent playerBat;
@@ -158,8 +160,10 @@ public class PongApp extends GameApplication {
 
         getGameScene().addUI(ui);
 
-        Canvas canvas = new Canvas(800,600);
-        getGameScene().addChild(canvas);
+        HandTrackingUIController handUIController = new HandTrackingUIController();
+        UI handUI = getAssetLoader().loadUI("hand.fxml", handUIController);
+
+        getGameScene().addUI(handUI);
     }
 
     private void initScreenBounds() {
