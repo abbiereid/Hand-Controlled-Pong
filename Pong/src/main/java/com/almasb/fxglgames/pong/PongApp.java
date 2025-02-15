@@ -33,6 +33,7 @@ import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
+import com.almasb.fxgl.intelligence.gesturerecog.Hand;
 import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.ui.UI;
@@ -154,7 +155,11 @@ public class PongApp extends GameApplication {
         controller.getLabelScorePlayer().textProperty().bind(getip("player1score").asString());
         controller.getLabelScoreEnemy().textProperty().bind(getip("player2score").asString());
 
+        HandTrackingUIController handController = new HandTrackingUIController();
+        UI handUI = getAssetLoader().loadUI("hand.fxml", handController);
+
         getGameScene().addUI(ui);
+        getGameScene().addUI(handUI);
     }
 
     private void initScreenBounds() {
