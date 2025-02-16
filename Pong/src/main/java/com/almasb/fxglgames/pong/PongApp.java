@@ -30,18 +30,18 @@ import com.almasb.fxgl.animation.Interpolators;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.core.math.FXGLMath;
-import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
-import com.almasb.fxgl.intelligence.gesturerecog.Hand;
 import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.ui.UI;
 import com.almasb.fxgl.intelligence.gesturerecog.HandTrackingService;
+import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.Map;
@@ -64,6 +64,8 @@ public class PongApp extends GameApplication {
     }
 
     private BatComponent playerBat;
+
+    private static Stage handStage;
 
     @Override
     protected void initInput() {
@@ -160,6 +162,15 @@ public class PongApp extends GameApplication {
 
         getGameScene().addUI(ui);
 
+        Platform.runLater(() -> {
+            handStage = new Stage();
+            handStage.show();
+            handStage.setTitle("Hand Tracking");
+
+            Canvas canvas = new Canvas(800, 600);
+
+            HandTracking.initUI(canvas);
+        });
 
     }
 
@@ -193,6 +204,10 @@ public class PongApp extends GameApplication {
 
     private void showGameOver(String winner) {
         getDialogService().showMessageBox(winner + " won! Demo over\nThanks for playing", getGameController()::exit);
+    }
+
+    public static Stage getHandStage() {
+        return handStage;
     }
 
     public static void main(String[] args) {
