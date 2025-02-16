@@ -10,11 +10,15 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.LinkedList;
+
 public class HandTracking {
 
     private static GraphicsContext g;
 
     private static double y = 0;
+    private static final int smoothing = 5;
+    private static final LinkedList<Double> yPoints = new LinkedList<>();
 
     public static void initUI(Canvas canvas, BatComponent playerBat) {
         g = canvas.getGraphicsContext2D();
@@ -34,19 +38,24 @@ public class HandTracking {
                             g.fillOval((1 - p.getX()) * 600, p.getY() * 400, 10, 10);
                         });
 
-                        if (y == 0) {
-                            y = hand.getPoints().getFirst().getY();
+                        double currentY = hand.getPoints().getFirst().getY();
+                        yPoints.add(currentY);
+
+                        if (yPoints.size() > smoothing) {
+                            yPoints.removeFirst();
                         }
 
-                        if (hand.getPoints().getFirst().getY() > -y ) {
+                        double smoothedY = yPoints.stream().mapToDouble(Double::doubleValue).average().orElse(currentY);
+
+                        if (smoothedY > y) {
                             playerBat.up();
-                        } else if (hand.getPoints().getFirst().getY() < -y) {
+                        } else if (smoothedY < y) {
                             playerBat.down();
                         } else {
                             playerBat.stop();
                         }
 
-                        y = hand.getPoints().getFirst().getY();
+                        y = smoothedY;
 
                     });
                 });
