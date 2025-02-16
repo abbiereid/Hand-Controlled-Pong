@@ -169,7 +169,7 @@ public class PongApp extends GameApplication {
 
             Canvas canvas = new Canvas(800, 600);
 
-            HandTracking.initUI(canvas);
+            HandTracking.initUI(canvas, playerBat);
         });
 
     }

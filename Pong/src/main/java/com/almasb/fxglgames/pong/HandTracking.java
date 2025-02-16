@@ -16,7 +16,7 @@ public class HandTracking {
 
     private static double y;
 
-    public static void initUI(Canvas canvas) {
+    public static void initUI(Canvas canvas, BatComponent playerBat) {
         g = canvas.getGraphicsContext2D();
         g.setFill(Color.BLUE);
 
@@ -34,6 +34,14 @@ public class HandTracking {
                             g.fillOval((1 - p.getX()) * 600, p.getY() * 400, 10, 10);
                         });
 
+                        if (hand.getPoints().getFirst().getY() > y) {
+                            playerBat.up();
+                        } else if (hand.getPoints().getFirst().getY() < y) {
+                            playerBat.down();
+                        } else if (hand.getPoints().getFirst().getY() == y) {
+                            playerBat.stop();
+                        }
+
                         y = hand.getPoints().getFirst().getY();
 
                     });
@@ -47,10 +55,6 @@ public class HandTracking {
                 });
 
         FXGL.getService(HandTrackingService.class).start();
-    }
-
-    public double getY() {
-        return y;
     }
 
 }
