@@ -160,10 +160,7 @@ public class PongApp extends GameApplication {
 
         getGameScene().addUI(ui);
 
-        HandTrackingUIController handUIController = new HandTrackingUIController();
-        UI handUI = getAssetLoader().loadUI("hand.fxml", handUIController);
 
-        getGameScene().addUI(handUI);
     }
 
     private void initScreenBounds() {
