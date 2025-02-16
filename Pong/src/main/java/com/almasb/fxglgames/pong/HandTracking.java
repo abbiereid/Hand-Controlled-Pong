@@ -17,10 +17,9 @@ public class HandTracking {
     private static GraphicsContext g;
 
     private static double y = 0;
-    private static final int smoothing = 15;
+    private static final int smoothing = 5;
     private static final LinkedList<Double> yPoints = new LinkedList<>();
-
-    private static final double minimumThreshold = 0.004;
+    private static final double minimumThreshold = 0.009;
 
     public static void initUI(Canvas canvas, BatComponent playerBat) {
         g = canvas.getGraphicsContext2D();
@@ -51,9 +50,9 @@ public class HandTracking {
 
                         if (Math.abs(smoothedY - y) > minimumThreshold) {
                             if (smoothedY > y) {
-                                playerBat.up();
-                            } else if (smoothedY < y) {
                                 playerBat.down();
+                            } else if (smoothedY < y) {
+                                playerBat.up();
                             }
                         } else {
                             playerBat.stop();
