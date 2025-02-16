@@ -14,7 +14,7 @@ public class HandTracking {
 
     private static GraphicsContext g;
 
-    private static double y;
+    private static double y = 0;
 
     public static void initUI(Canvas canvas, BatComponent playerBat) {
         g = canvas.getGraphicsContext2D();
@@ -34,11 +34,15 @@ public class HandTracking {
                             g.fillOval((1 - p.getX()) * 600, p.getY() * 400, 10, 10);
                         });
 
-                        if (hand.getPoints().getFirst().getY() > y) {
+                        if (y == 0) {
+                            y = hand.getPoints().getFirst().getY();
+                        }
+
+                        if (hand.getPoints().getFirst().getY() > -y ) {
                             playerBat.up();
-                        } else if (hand.getPoints().getFirst().getY() < y) {
+                        } else if (hand.getPoints().getFirst().getY() < -y) {
                             playerBat.down();
-                        } else if (hand.getPoints().getFirst().getY() == y) {
+                        } else {
                             playerBat.stop();
                         }
 
