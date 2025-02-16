@@ -20,7 +20,7 @@ public class HandTracking {
     private static final int smoothing = 5;
     private static final LinkedList<Double> yPoints = new LinkedList<>();
 
-    private static final double minimumThreshold = 0.025;
+    private static final double minimumThreshold = 0.01;
 
     public static void initUI(Canvas canvas, BatComponent playerBat) {
         g = canvas.getGraphicsContext2D();
